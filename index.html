@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Jogo do Botão</title>
+        <meta charset="UTF-8">
+        <link rel="stylesheet" href="css/bootstrap.css" />
+        <link rel="stylesheet" href="css/bootstrap.min.css" />
+        <style>
+            #canvas {
+                margin-top: 20px;
+                border: 1px solid;
+                background-color: white;
+            }
+            .texto {
+                font-size: 18px; 
+            }
+        </style>
+        <script src="js/game.js" ></script>        
+    </head>
+    <body style="background-color: #D3D3D3;">
+
+        <div class="container">
+            <div class="row">               
+                <div class="span10 offset1">
+                    <canvas id="canvas" width="750" height="500">
+                        Seu Navegador não suporta esse aplicativo, ultilize outro ou atualize esse.
+                    </canvas>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="span2 offset1">
+                    <b class="texto" onclick="botao.intensidade = 1">
+                        Intensidade
+                    </b>
+                </div>
+                <div class="span3 offset1">
+                    <b class="texto" id="coordenadas" style="margin-left: 5px;" 
+                       onclick="botao.x = 350; botao.y = 200;">
+                        Direção : (0, 0)
+                    </b>                   
+                </div>
+                <div class="span2">
+                    <b class="texto" onclick="diminuirLargura(200)" >Largura</b>
+                </div> 
+                <div class="span2">
+                    <input type="button" class="btn" onclick="iniciar()" value="Iniciar" />
+                </div>   
+            </div>
+
+            <div class="row">
+                <div class="span2 offset1">
+                    <input type="button" onclick="diminuirIntensidade(1)" class="btn" value="-" />
+                    <b id="intensidade" onclick="aumentarIntensidade(10)" >0</b>              
+                    <input type="button" onclick="aumentarIntensidade(1)" class="btn" value="+" />
+                </div>
+
+                <div class="span1 offset1">
+                    <input type="button" class="btn" 
+                           value="Cima" onclick="moverCima()" style="margin-left: 15px;" />
+                </div>
+
+                <div class="span2 offset2">
+                    <input type="button" class="btn" onclick="diminuirLargura(1)" value="-" />
+                    <b id="largura" onclick="aumentarLargura(10)" >0</b>              
+                    <input type="button" class="btn" onclick="aumentarLargura(1)" value="+" />
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="span1 offset3">                    
+                    <input type="button" class="btn" value="Esquerda" onclick="moverEsquerda()" />
+                </div>
+                <div class="span1 offset1">                    
+                    <input type="button" class="btn" value="Direita" onclick="moverDireita()" />
+                </div>
+                <div class="span1 offset1" style="margin-top: 20px;">                 
+                    <b class="texto" onclick="diminuirAltura(200)" >Altura</b>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="span1 offset4">                    
+                    <input type="button" class="btn" onclick="moverBaixo()" 
+                           value="Baixo" style="margin-left: 15px;" />
+                </div>
+                <div class="span4 offset2">                    
+                    <input type="button" class="btn" value="-" onclick="diminuirAltura(1)" />
+                    <b id="altura" onclick="aumentarAltura(10)">
+                        0
+                    </b>              
+                    <input type="button" class="btn" value="+" onclick="aumentarAltura(1)" />
+                </div>
+            </div>
+        </div>
+    </body>
+</html>

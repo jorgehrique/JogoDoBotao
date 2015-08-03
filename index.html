@@ -44,35 +44,35 @@
                     <b class="texto" onclick="diminuirLargura(200)" >Largura</b>
                 </div> 
                 <div class="span2">
-                    <input type="button" class="btn" onclick="iniciar()" value="Iniciar" />
+                    <input type="button" class="btn" id="iniciar" value="Iniciar" />
                 </div>   
             </div>
 
             <div class="row">
                 <div class="span2 offset1">
-                    <input type="button" onclick="diminuirIntensidade(1)" class="btn" value="-" />
+                    <input type="button" id="diminuirInt" class="btn" value="-" />
                     <b id="intensidade" onclick="aumentarIntensidade(10)" >0</b>              
-                    <input type="button" onclick="aumentarIntensidade(1)" class="btn" value="+" />
+                    <input type="button" id="aumentarInt" class="btn" value="+" />
                 </div>
 
                 <div class="span1 offset1">
                     <input type="button" class="btn" 
-                           value="Cima" onclick="moverCima()" style="margin-left: 15px;" />
+                           value="Cima" id="btncima" style="margin-left: 15px;" />
                 </div>
 
                 <div class="span2 offset2">
-                    <input type="button" class="btn" onclick="diminuirLargura(1)" value="-" />
+                    <input type="button" class="btn" id="diminuirLarg" value="-" />
                     <b id="largura" onclick="aumentarLargura(10)" >0</b>              
-                    <input type="button" class="btn" onclick="aumentarLargura(1)" value="+" />
+                    <input type="button" class="btn" id="aumentarLarg" value="+" />
                 </div>
             </div>
 
             <div class="row">
                 <div class="span1 offset3">                    
-                    <input type="button" class="btn" value="Esquerda" onclick="moverEsquerda()" />
+                    <input type="button" class="btn" value="Esquerda" id="btnesquerda" />
                 </div>
                 <div class="span1 offset1">                    
-                    <input type="button" class="btn" value="Direita" onclick="moverDireita()" />
+                    <input type="button" class="btn" value="Direita" id="btndireita" />
                 </div>
                 <div class="span1 offset1" style="margin-top: 20px;">                 
                     <b class="texto" onclick="diminuirAltura(200)" >Altura</b>
@@ -81,15 +81,15 @@
 
             <div class="row">
                 <div class="span1 offset4">                    
-                    <input type="button" class="btn" onclick="moverBaixo()" 
+                    <input type="button" class="btn" id="btnbaixo" 
                            value="Baixo" style="margin-left: 15px;" />
                 </div>
                 <div class="span4 offset2">                    
-                    <input type="button" class="btn" value="-" onclick="diminuirAltura(1)" />
+                    <input type="button" class="btn" value="-" id="diminuirAlt" />
                     <b id="altura" onclick="aumentarAltura(10)">
                         0
                     </b>              
-                    <input type="button" class="btn" value="+" onclick="aumentarAltura(1)" />
+                    <input type="button" class="btn" value="+" id="aumentarAlt" />
                 </div>
             </div>
         </div>

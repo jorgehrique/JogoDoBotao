@@ -46,7 +46,7 @@ var intensidade;
 // Usado para calcular pontuação
 var pt = 0;
 
-window.onload = function () {
+onload = function () {
     canvas = document.getElementById("canvas");
     contexto = canvas.getContext("2d");
 
@@ -54,9 +54,28 @@ window.onload = function () {
     largura = document.getElementById("largura");
     altura = document.getElementById("altura");
     intensidade = document.getElementById("intensidade");
+
+    document.getElementById("iniciar").addEventListener("click", iniciar);
+
+    document.getElementById("diminuirInt").addEventListener("click", diminuirIntensidade);
+    document.getElementById("aumentarInt").addEventListener("click", aumentarIntensidade); 
+
+    document.getElementById("diminuirLarg").addEventListener("click", diminuirLargura);
+    document.getElementById("aumentarLarg").addEventListener("click", aumentarLargura);
+    document.getElementById("diminuirAlt").addEventListener("click", diminuirAltura);
+    document.getElementById("aumentarAlt").addEventListener("click", aumentarAltura);
+
+    document.getElementById("btncima").addEventListener("click", moverCima);
+    document.getElementById("btnbaixo").addEventListener("click", moverBaixo;
+    document.getElementById("btnesquerda").addEventListener("click", moverEsquerda);
+    document.getElementById("btndireita").addEventListener("click", moverDireita);
+
+
 };
 
 function iniciar() { 
+
+    document.getElementById("iniciar").value = "Reiniciar";
     
     r1.ativo = false;    
     r2.ativo = false;    
@@ -205,9 +224,7 @@ function aumentarIntensidade(valor) {
 }
 
 function diminuirIntensidade(valor) {
-    if (botao.intensidade - 1 < 1) {
-        // nada
-    } else {
+    if (!(botao.intensidade - 1 < 1)) {
         botao.intensidade = botao.intensidade - valor;
     }
 }
@@ -293,4 +310,25 @@ function diminuirLargura(valor) {
     } else {
         botao.largura = botao.largura - valor;
     }
+}
+
+// Conserto de bug provisório
+// Sobrecarga de funções que não receberam arg
+function aumentarIntensidade(){
+    aumentarIntensidade(1);    
+}
+function diminuirIntensidade(){
+    diminuirIntensidade(1);
+}
+function aumentarLargura(){
+    aumentarLargura(1);
+}
+function diminuirLargura(){
+    diminuirLargura(1);
+}
+function aumentarAltura(){
+    aumentarAltura(1);
+}
+function diminuirAltura(){
+    aumentarAltura(1);
 }

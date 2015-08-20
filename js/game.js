@@ -48,16 +48,17 @@ var pt = 0;
 
 window.onload = function () {
 
-    alert("alert");
-
     canvas = document.getElementById("canvas");
     contexto = canvas.getContext("2d");
 
+    // Texto no HTML
     coordenadas = document.getElementById("coordenadas");
     largura = document.getElementById("largura");
     altura = document.getElementById("altura");
     intensidade = document.getElementById("intensidade");
 
+
+    // Adicionando eventos aos controles
     document.getElementById("iniciar").addEventListener("click", iniciar);
 
     document.getElementById("diminuirInt").addEventListener("click", diminuirIntensidade);
@@ -111,7 +112,7 @@ function iniciar() {
 // Taxa de atualização 60fps
 var frame = 1000 / 60;
 
-// Se for stop for true ele intenrrompe o loop
+// Se for stop for true ele interrompe o loop
 var stop;
 
 // game loop
@@ -184,11 +185,9 @@ function verificar() {
     comparar(r4);
     comparar(r5);
 
-    if (r1.ativo === true &&
-            r2.ativo === true &&
-            r3.ativo === true &&
-            r4.ativo === true &&
-            r5.ativo === true) {
+    if (r1.ativo === true && r2.ativo === true &&
+        r3.ativo === true && r4.ativo === true && r5.ativo === true) {
+
         stop = true;
         pt = 150000 - pt;
         alert("Fim de jogo !!!");

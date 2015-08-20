@@ -1,4 +1,4 @@
-// Retangulos :
+﻿// Retangulos :
 var r1 = {
     cor: "green"
 };
@@ -46,7 +46,10 @@ var intensidade;
 // Usado para calcular pontuação
 var pt = 0;
 
-onload = function () {
+window.onload = function () {
+
+    alert("alert");
+
     canvas = document.getElementById("canvas");
     contexto = canvas.getContext("2d");
 
@@ -64,12 +67,11 @@ onload = function () {
     document.getElementById("aumentarLarg").addEventListener("click", aumentarLargura);
     document.getElementById("diminuirAlt").addEventListener("click", diminuirAltura);
     document.getElementById("aumentarAlt").addEventListener("click", aumentarAltura);
-
+    
     document.getElementById("btncima").addEventListener("click", moverCima);
-    document.getElementById("btnbaixo").addEventListener("click", moverBaixo;
+    document.getElementById("btnbaixo").addEventListener("click", moverBaixo);
     document.getElementById("btnesquerda").addEventListener("click", moverEsquerda);
     document.getElementById("btndireita").addEventListener("click", moverDireita);
-
 
 };
 
@@ -314,6 +316,7 @@ function diminuirLargura(valor) {
 
 // Conserto de bug provisório
 // Sobrecarga de funções que não receberam arg
+/*
 function aumentarIntensidade(){
     aumentarIntensidade(1);    
 }
@@ -331,4 +334,4 @@ function aumentarAltura(){
 }
 function diminuirAltura(){
     aumentarAltura(1);
-}
+}*/

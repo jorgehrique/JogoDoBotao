@@ -57,23 +57,24 @@ window.onload = function () {
     altura = document.getElementById("altura");
     intensidade = document.getElementById("intensidade");
 
-
     // Adicionando eventos aos controles
-    document.getElementById("iniciar").addEventListener("click", iniciar);
-
-    document.getElementById("diminuirInt").addEventListener("click", diminuirIntensidade);
-    document.getElementById("aumentarInt").addEventListener("click", aumentarIntensidade); 
-
-    document.getElementById("diminuirLarg").addEventListener("click", diminuirLargura);
-    document.getElementById("aumentarLarg").addEventListener("click", aumentarLargura);
-    document.getElementById("diminuirAlt").addEventListener("click", diminuirAltura);
-    document.getElementById("aumentarAlt").addEventListener("click", aumentarAltura);
+    document.getElementById("iniciar").onclick = iniciar;
     
-    document.getElementById("btncima").addEventListener("click", moverCima);
-    document.getElementById("btnbaixo").addEventListener("click", moverBaixo);
-    document.getElementById("btnesquerda").addEventListener("click", moverEsquerda);
-    document.getElementById("btndireita").addEventListener("click", moverDireita);
+    // Eventos adicionados no html
+    /*
+    document.getElementById("diminuirInt").onclick =  diminuirIntensidade;
+    document.getElementById("aumentarInt").onclick =  aumentarIntensidade; 
 
+    document.getElementById("diminuirLarg").onclick =  diminuirLargura;
+    document.getElementById("aumentarLarg").onclick =  aumentarLargura;
+    document.getElementById("diminuirAlt").onclick =  diminuirAltura;
+    document.getElementById("aumentarAlt").onclick = aumentarAltura;
+    */
+
+    document.getElementById("btncima").onclick =  moverCima;
+    document.getElementById("btnbaixo").onclick =  moverBaixo;
+    document.getElementById("btnesquerda").onclick =  moverEsquerda;
+    document.getElementById("btndireita").onclick =  moverDireita;
 };
 
 function iniciar() { 
@@ -189,11 +190,10 @@ function verificar() {
         r3.ativo === true && r4.ativo === true && r5.ativo === true) {
 
         stop = true;
-        pt = 150000 - pt;
         alert("Fim de jogo !!!");
         limparTela();
         contexto.font = "bold 18px sans-serif";
-        contexto.fillText("Fim de jogo, sua pontuação foi : "+pt, 130, 130);
+        contexto.fillText("Fim de jogo, seu tempo foi : "+pt+" segundos", 130, 130);
     }
 }
 
@@ -312,25 +312,3 @@ function diminuirLargura(valor) {
         botao.largura = botao.largura - valor;
     }
 }
-
-// Conserto de bug provisório
-// Sobrecarga de funções que não receberam arg
-/*
-function aumentarIntensidade(){
-    aumentarIntensidade(1);    
-}
-function diminuirIntensidade(){
-    diminuirIntensidade(1);
-}
-function aumentarLargura(){
-    aumentarLargura(1);
-}
-function diminuirLargura(){
-    diminuirLargura(1);
-}
-function aumentarAltura(){
-    aumentarAltura(1);
-}
-function diminuirAltura(){
-    aumentarAltura(1);
-}*/

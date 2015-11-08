@@ -50,9 +50,11 @@
 
             <div class="row">
                 <div class="span2 offset1">
-                    <input type="button" id="diminuirInt" class="btn" value="-" />
+                    <input type="button" id="diminuirInt" 
+                        onclick="diminuirIntensidade(1)" class="btn" value="-" />
                     <b id="intensidade" onclick="aumentarIntensidade(10)" >0</b>              
-                    <input type="button" id="aumentarInt" class="btn" value="+" />
+                    <input type="button" id="aumentarInt" 
+                        onclick="aumentarIntensidade(1)" class="btn" value="+" />
                 </div>
 
                 <div class="span1 offset1">
@@ -61,9 +63,11 @@
                 </div>
 
                 <div class="span2 offset2">
-                    <input type="button" class="btn" id="diminuirLarg" value="-" />
+                    <input type="button" class="btn" id="diminuirLarg" value="-" 
+                        onclick="diminuirLargura(1)" />
                     <b id="largura" onclick="aumentarLargura(10)" >0</b>              
-                    <input type="button" class="btn" id="aumentarLarg" value="+" />
+                    <input type="button" class="btn" id="aumentarLarg" value="+" 
+                        onclick="aumentarLargura(1)" />
                 </div>
             </div>
 
@@ -85,11 +89,13 @@
                            value="Baixo" style="margin-left: 15px;" />
                 </div>
                 <div class="span4 offset2">                    
-                    <input type="button" class="btn" value="-" id="diminuirAlt" />
+                    <input type="button" class="btn" value="-" id="diminuirAlt"
+                        onclick="diminuirAltura(1)" />
                     <b id="altura" onclick="aumentarAltura(10)">
                         0
                     </b>              
-                    <input type="button" class="btn" value="+" id="aumentarAlt" />
+                    <input type="button" class="btn" value="+" id="aumentarAlt" 
+                        onclick="aumentarAltura(1)" />
                 </div>
             </div>
         </div>

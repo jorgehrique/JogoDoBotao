@@ -1,20 +1,24 @@
-﻿// Retangulos :
-const r1 = {
-    cor: "green"
-};
-const r2 = {
-    cor: "red"
-};
-const r3 = {
-    cor: "blue"
-};
-const r4 = {
-    cor: "yellow"
-};
-const r5 = {
-    cor: "#808080"
-};
-// fim dos retangulos
+﻿// lista de retangulos
+let rs = [
+    {
+        cor: "green"
+    },
+    {
+        cor: "red"
+    },
+    {
+        cor: "blue"
+    },
+    {
+        cor: "red"
+    },
+    {
+        cor: "yellow"
+    },
+    {
+        cor: "#808080"
+    }
+]
 
 // "botão"
 // é o retangulo principal movido pelo jogador
@@ -63,31 +67,18 @@ window.onload = () => {
 iniciar = () => {
     document.getElementById("iniciar").value = "Reiniciar";
 
-    r1.ativo = false;
-    r2.ativo = false;
-    r3.ativo = false;
-    r4.ativo = false;
-    r5.ativo = false;
-
+    rs = rs.map(r => {
+        r.ativo = false
+        return r
+    })
     limparTela();
 
-    preencherRetangulo(r1);
-    desenhar(r1);
-
-    preencherRetangulo(r2);
-    desenhar(r2);
-
-    preencherRetangulo(r3);
-    desenhar(r3);
-
-    preencherRetangulo(r4);
-    desenhar(r4);
-
-    preencherRetangulo(r5);
-    desenhar(r5);
+    rs.forEach(r => {
+        preencherRetangulo(r);
+        desenhar(r);
+    })
 
     desenhar(botao);
-
     stop = false;
     setTimeout(loop, 100);
 }
@@ -104,10 +95,8 @@ loop = () => {
     redesenhar();
     pt++;
     verificar();
-
-    if (stop === false) {
+    if (!stop)
         setTimeout(loop, frame);
-    }
 };
 
 /*
@@ -135,12 +124,7 @@ desenhar = r => {
 // Atualiza a tela apagando e desenhando denovo
 redesenhar = () => {
     limparTela();
-
-    desenhar(r1);
-    desenhar(r2);
-    desenhar(r3);
-    desenhar(r4);
-    desenhar(r5);
+    rs.forEach(desenhar)
     desenhar(botao);
 }
 
@@ -162,20 +146,14 @@ limparTela = () => {
  *   finaliza o jogo
  */
 verificar = () => {
-    comparar(r1);
-    comparar(r2);
-    comparar(r3);
-    comparar(r4);
-    comparar(r5);
-
-    if (r1.ativo === true && r2.ativo === true &&
-        r3.ativo === true && r4.ativo === true && r5.ativo === true) {
-
+    rs.forEach(comparar)
+    const ativo = rs.map(r => r.ativo)
+    if (!ativo.includes(false)) {
         stop = true;
         alert("Fim de jogo !!!");
         limparTela();
         contexto.font = "bold 18px sans-serif";
-        contexto.fillText("Fim de jogo, seu tempo foi : " + pt + " segundos", 130, 130);
+        contexto.fillText("Fim de jogo, seu record foi : " + pt + " pontos", 130, 130);
     }
 }
 
@@ -219,7 +197,6 @@ moverDireita = () => {
     // Limite parede da direita
     if ((botao.x + botao.intensidade + botao.largura) > larguraCanvas) {
         botao.x = larguraCanvas - botao.largura - 1;
-
     } else {
         botao.x = botao.x + botao.intensidade;
     }

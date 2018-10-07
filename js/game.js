@@ -1,24 +1,24 @@
 ﻿// Retangulos :
-var r1 = {
+const r1 = {
     cor: "green"
 };
-var r2 = {
+const r2 = {
     cor: "red"
 };
-var r3 = {
+const r3 = {
     cor: "blue"
 };
-var r4 = {
+const r4 = {
     cor: "yellow"
 };
-var r5 = {
+const r5 = {
     cor: "#808080"
 };
 // fim dos retangulos
 
 // "botão"
 // é o retangulo principal movido pelo jogador
-var botao = {
+let botao = {
     x: 350,
     y: 200,
     largura: 80,
@@ -28,23 +28,23 @@ var botao = {
 };
 
 // Dimensão do Canvas no html
-var larguraCanvas = 750;
-var alturaCanvas = 500;
+const larguraCanvas = 750;
+const alturaCanvas = 500;
 
 // Canvas
-var canvas;
+let canvas;
 
 // Contexto do Canvas
-var contexto;
+let contexto;
 
 // Texto de coordenadas e dimensão
-var coordenadas;
-var largura;
-var altura;
-var intensidade;
+let coordenadas;
+let largura;
+let altura;
+let intensidade;
 
 // Usado para calcular pontuação
-var pt = 0;
+let pt = 0;
 
 window.onload = function () {
 
@@ -59,7 +59,7 @@ window.onload = function () {
 
     // Adicionando eventos aos controles
     document.getElementById("iniciar").onclick = iniciar;
-    
+
     // Eventos adicionados no html
     /*
     document.getElementById("diminuirInt").onclick =  diminuirIntensidade;
@@ -71,24 +71,24 @@ window.onload = function () {
     document.getElementById("aumentarAlt").onclick = aumentarAltura;
     */
 
-    document.getElementById("btncima").onclick =  moverCima;
-    document.getElementById("btnbaixo").onclick =  moverBaixo;
-    document.getElementById("btnesquerda").onclick =  moverEsquerda;
-    document.getElementById("btndireita").onclick =  moverDireita;
+    document.getElementById("btncima").onclick = moverCima;
+    document.getElementById("btnbaixo").onclick = moverBaixo;
+    document.getElementById("btnesquerda").onclick = moverEsquerda;
+    document.getElementById("btndireita").onclick = moverDireita;
 };
 
-function iniciar() { 
+function iniciar() {
 
     document.getElementById("iniciar").value = "Reiniciar";
-    
-    r1.ativo = false;    
-    r2.ativo = false;    
+
+    r1.ativo = false;
+    r2.ativo = false;
     r3.ativo = false;
-    r4.ativo = false;    
+    r4.ativo = false;
     r5.ativo = false;
-    
+
     limparTela();
-    
+
     preencherRetangulo(r1);
     desenhar(r1);
 
@@ -111,18 +111,18 @@ function iniciar() {
 }
 
 // Taxa de atualização 60fps
-var frame = 1000 / 60;
+const frame = 1000 / 60;
 
 // Se for stop for true ele interrompe o loop
-var stop;
+let stop;
 
 // game loop
-var loop = function () {    
+const loop = function () {
     atualizarTexto();
-    redesenhar();    
-    pt ++;
-    verificar(); 
-    
+    redesenhar();
+    pt++;
+    verificar();
+
     if (stop === false) {
         setTimeout(loop, frame);
     }
@@ -145,7 +145,7 @@ function preencherRetangulo(r) {
  * 
  * @param {Retangulo} r
  */
-function desenhar(r) {    
+function desenhar(r) {
     contexto.strokeStyle = r.cor;
     contexto.strokeRect(r.x, r.y, r.largura, r.altura);
 }
@@ -193,7 +193,7 @@ function verificar() {
         alert("Fim de jogo !!!");
         limparTela();
         contexto.font = "bold 18px sans-serif";
-        contexto.fillText("Fim de jogo, seu tempo foi : "+pt+" segundos", 130, 130);
+        contexto.fillText("Fim de jogo, seu tempo foi : " + pt + " segundos", 130, 130);
     }
 }
 
@@ -206,11 +206,11 @@ function verificar() {
  */
 function comparar(r) {
     if (botao.x === r.x &&
-            botao.y === r.y &&
-            botao.largura === r.largura &&
-            botao.altura === r.altura) {
-        r.ativo = true;        
-        r.cor = "white";        
+        botao.y === r.y &&
+        botao.largura === r.largura &&
+        botao.altura === r.altura) {
+        r.ativo = true;
+        r.cor = "white";
     }
 }
 
@@ -276,7 +276,7 @@ function moverBaixo() {
  */
 function aumentarAltura(valor) {
     if ((botao.y + botao.altura + 1) > alturaCanvas - 1 ||
-            (botao.altura + 1) > 200) {
+        (botao.altura + 1) > 200) {
         botao.altura = 200;
     } else {
         botao.altura = botao.altura + valor;
@@ -297,7 +297,7 @@ function diminuirAltura(valor) {
  */
 function aumentarLargura(valor) {
     if ((botao.x + botao.largura + valor) > larguraCanvas - 1 ||
-            (botao.largura + 1) > 200) {
+        (botao.largura + 1) > 200) {
         botao.largura = 200;
     } else {
         botao.largura = botao.largura + valor;

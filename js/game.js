@@ -1,13 +1,4 @@
-﻿let rs = [
-    { cor: "green" },
-    { cor: "red" },
-    { cor: "blue" },
-    { cor: "red" },
-    { cor: "yellow" },
-    { cor: "#808080" }
-]
-
-let botao = {
+﻿let _BOTAO = {
     x: 350,
     y: 200,
     largura: 80,
@@ -16,12 +7,19 @@ let botao = {
     intensidade: 10
 };
 
+// labels
 const larguraCanvas = 750;
 const alturaCanvas = 500;
 let canvas, contexto;
 let coordenadas, intensidade;
 let largura, altura;
 let pt = 0;
+
+// Taxa de atualização 60fps
+const frame = 1000 / 60;
+
+// Se for stop for true ele interrompe o loop
+let stop;
 
 window.onload = () => {
     canvas = document.getElementById("canvas");
@@ -32,7 +30,7 @@ window.onload = () => {
     largura = document.getElementById("largura");
     altura = document.getElementById("altura");
     intensidade = document.getElementById("intensidade");
-    
+
     // Adicionando eventos aos controles
     document.getElementById("iniciar").onclick = iniciar;
     document.getElementById("btncima").onclick = moverCima;
@@ -44,166 +42,130 @@ window.onload = () => {
 iniciar = () => {
     document.getElementById("iniciar").value = "Reiniciar";
 
-    rs = rs.map(r => {
-        r.ativo = false
-        return r
-    })
-    
     limparTela();
 
-    rs.forEach(r => {
-        preencherRetangulo(r);
-        desenhar(r);
-    })
+    let botoes = [
+        { cor: "green", ativo: false },
+        { cor: "red", ativo: true },
+        { cor: "blue", ativo: true },
+        { cor: "red", ativo: true },
+        { cor: "yellow", ativo: true },
+        { cor: "#808080", ativo: true }
+    ];
 
-    desenhar(botao);
-    stop = false;
-    setTimeout(loop, 100);
+    botoes = botoes.map(preencherRetangulo);
+
+    setTimeout(loop, 100, botoes);
 }
 
-// Taxa de atualização 60fps
-const frame = 1000 / 60;
-
-// Se for stop for true ele interrompe o loop
-let stop;
-
-// game loop
-loop = () => {
+loop = botoes => {
     atualizarTexto();
-    redesenhar();
-    pt++;
-    verificar();
-    if (!stop)
-        setTimeout(loop, frame);
+    limparTela();
+    desenhar(botoes);
+    desenhar([_BOTAO]);
+    const verificados = verificar(botoes);
+
+    if (verificados == null)
+        finalizar();
+    else
+        setTimeout(loop, frame, verificados);
 };
 
-/*
- * Gera as coordenadas e dimensões do retangulo
- * 
- * @param {Retangulo} r
- */
 preencherRetangulo = r => {
     r.largura = 35 + Math.floor(Math.random() * 115);
     r.altura = 35 + Math.floor(Math.random() * 115);
     r.x = 5 + Math.floor(Math.random() * (larguraCanvas - r.largura - 10));
     r.y = 5 + Math.floor(Math.random() * (alturaCanvas - r.altura - 10));
+    return r;
 }
 
-/*
- * Desenha o retangulo do parametro
- * 
- * @param {Retangulo} r
- */
-desenhar = r => {
-    contexto.strokeStyle = r.cor;
-    contexto.strokeRect(r.x, r.y, r.largura, r.altura);
+verificar = botoes => {
+    const verificados = botoes.map(comparar);
+    const falsos = verificados.filter(v => v.ativo == false);
+    return (falsos.length == 0) ? null : verificados;
 }
 
-// Atualiza a tela apagando e desenhando denovo
-redesenhar = () => {
-    limparTela();
-    rs.forEach(desenhar)
-    desenhar(botao);
+comparar = b => {
+    if (_BOTAO.x === b.x && _BOTAO.y === b.y &&
+        _BOTAO.largura === b.largura && _BOTAO.altura === b.altura) {
+        return { ...b, ativo: true, cor: 'white' };
+    }
+    return b;
 }
 
-// Atualiza o texto das labels
+// side effect
+desenhar = botoes => {
+    botoes.forEach(b => {
+        contexto.strokeStyle = b.cor;
+        contexto.strokeRect(b.x, b.y, b.largura, b.altura);
+    })
+}
+
+// side effect
 atualizarTexto = () => {
-    coordenadas.innerHTML = "Direção : (" + botao.x + ", " + botao.y + ")";
-    largura.innerHTML = botao.largura;
-    altura.innerHTML = botao.altura;
-    intensidade.innerHTML = botao.intensidade;
+    coordenadas.innerHTML = "Direção : (" + _BOTAO.x + ", " + _BOTAO.y + ")";
+    largura.innerHTML = _BOTAO.largura;
+    altura.innerHTML = _BOTAO.altura;
+    intensidade.innerHTML = _BOTAO.intensidade;
 }
 
-// limpa TODOS os retangulos da tela
+// side effect
 limparTela = () => {
     contexto.clearRect(0, 0, larguraCanvas, alturaCanvas);
 }
 
-/*
- * Verifica se todos os quadrados foram encaixados e
- *   finaliza o jogo
- */
-verificar = () => {
-    rs.forEach(comparar)
-    const ativo = rs.map(r => r.ativo)
-    if (!ativo.includes(false)) {
-        stop = true;
-        alert("Fim de jogo !!!");
-        limparTela();
-        contexto.font = "bold 18px sans-serif";
-        contexto.fillText("Fim de jogo, seu record foi : " + pt + " pontos", 130, 130);
-    }
+// side effect
+finalizar = () => {
+    stop = true;
+    alert("Fim de jogo !!!");
+    limparTela();
+    contexto.font = "bold 18px sans-serif";
+    contexto.fillText("Fim de jogo, seu record foi : " + pt + " pontos", 130, 130);
 }
-
-/*
- * Confere se o botão esta encaixado no quadrado.
- * OBS : +1 e -2 serve para o botão encaixar dentro 
- *       e mostrar a borda do quadrado
- * 
- * @param {Retangulo} r
- */
-comparar = r => {
-    if (botao.x === r.x &&
-        botao.y === r.y &&
-        botao.largura === r.largura &&
-        botao.altura === r.altura) {
-        r.ativo = true;
-        r.cor = "white";
-    }
-}
-
-/*
- * Aumenta e diminui a intensidade
- *
- *  Valor é o valor a aumentar/diminuir
- */
 
 aumentarIntensidade = valor => {
-    botao.intensidade = botao.intensidade + valor;
+    _BOTAO.intensidade = _BOTAO.intensidade + valor;
 }
 
 diminuirIntensidade = valor => {
-    if (!(botao.intensidade - 1 < 1)) {
-        botao.intensidade = botao.intensidade - valor;
+    if (!(_BOTAO.intensidade - 1 < 1)) {
+        _BOTAO.intensidade = _BOTAO.intensidade - valor;
     }
 }
 
-/*
- *  muda as coordenadas/dimensões e repinta o botão
- */
 moverDireita = () => {
     // Limite parede da direita
-    if ((botao.x + botao.intensidade + botao.largura) > larguraCanvas) {
-        botao.x = larguraCanvas - botao.largura - 1;
+    if ((_BOTAO.x + _BOTAO.intensidade + _BOTAO.largura) > larguraCanvas) {
+        _BOTAO.x = larguraCanvas - _BOTAO.largura - 1;
     } else {
-        botao.x = botao.x + botao.intensidade;
+        _BOTAO.x = _BOTAO.x + _BOTAO.intensidade;
     }
 }
 
 moverEsquerda = () => {
     // Limite parede da esquerda
-    if ((botao.x - botao.intensidade) < 1) {
-        botao.x = 2;
+    if ((_BOTAO.x - _BOTAO.intensidade) < 1) {
+        _BOTAO.x = 2;
     } else {
-        botao.x = botao.x - botao.intensidade;
+        _BOTAO.x = _BOTAO.x - _BOTAO.intensidade;
     }
 }
 
 moverCima = () => {
     // Limite parede de cima
-    if ((botao.y - botao.intensidade) < 1) {
-        botao.y = 2;
+    if ((_BOTAO.y - _BOTAO.intensidade) < 1) {
+        _BOTAO.y = 2;
     } else {
-        botao.y = botao.y - botao.intensidade;
+        _BOTAO.y = _BOTAO.y - _BOTAO.intensidade;
     }
 }
 
 moverBaixo = () => {
     // Limite parede de baixo
-    if ((botao.y + botao.intensidade + botao.altura) > alturaCanvas) {
-        botao.y = alturaCanvas - botao.altura - 1;
+    if ((_BOTAO.y + _BOTAO.intensidade + _BOTAO.altura) > alturaCanvas) {
+        _BOTAO.y = alturaCanvas - _BOTAO.altura - 1;
     } else {
-        botao.y = botao.y + botao.intensidade;
+        _BOTAO.y = _BOTAO.y + _BOTAO.intensidade;
     }
 }
 
@@ -212,20 +174,20 @@ moverBaixo = () => {
  * Valor é o valor a aumentar/diminuir
  */
 aumentarAltura = valor => {
-    if ((botao.y + botao.altura + 1) > alturaCanvas - 1 ||
-        (botao.altura + 1) > 200) {
-        botao.altura = 200;
+    if ((_BOTAO.y + _BOTAO.altura + 1) > alturaCanvas - 1 ||
+        (_BOTAO.altura + 1) > 200) {
+        _BOTAO.altura = 200;
     } else {
-        botao.altura = botao.altura + valor;
+        _BOTAO.altura = _BOTAO.altura + valor;
     }
 }
 
 // Altura minima : 20px;
 diminuirAltura = valor => {
-    if (botao.altura - valor < 20) {
-        botao.altura = 20;
+    if (_BOTAO.altura - valor < 20) {
+        _BOTAO.altura = 20;
     } else {
-        botao.altura = botao.altura - valor;
+        _BOTAO.altura = _BOTAO.altura - valor;
     }
 }
 
@@ -233,19 +195,19 @@ diminuirAltura = valor => {
  * Não aumentar até passar do limite da direita e maior que 200px;
  */
 aumentarLargura = valor => {
-    if ((botao.x + botao.largura + valor) > larguraCanvas - 1 ||
-        (botao.largura + 1) > 200) {
-        botao.largura = 200;
+    if ((_BOTAO.x + _BOTAO.largura + valor) > larguraCanvas - 1 ||
+        (_BOTAO.largura + 1) > 200) {
+        _BOTAO.largura = 200;
     } else {
-        botao.largura = botao.largura + valor;
+        _BOTAO.largura = _BOTAO.largura + valor;
     }
 }
 
 // Largura minima : 20px;
 diminuirLargura = valor => {
-    if (botao.largura - valor < 20) {
-        botao.largura = 20;
+    if (_BOTAO.largura - valor < 20) {
+        _BOTAO.largura = 20;
     } else {
-        botao.largura = botao.largura - valor;
+        _BOTAO.largura = _BOTAO.largura - valor;
     }
 }

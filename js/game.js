@@ -1,27 +1,12 @@
-﻿// lista de retangulos
-let rs = [
-    {
-        cor: "green"
-    },
-    {
-        cor: "red"
-    },
-    {
-        cor: "blue"
-    },
-    {
-        cor: "red"
-    },
-    {
-        cor: "yellow"
-    },
-    {
-        cor: "#808080"
-    }
+﻿let rs = [
+    { cor: "green" },
+    { cor: "red" },
+    { cor: "blue" },
+    { cor: "red" },
+    { cor: "yellow" },
+    { cor: "#808080" }
 ]
 
-// "botão"
-// é o retangulo principal movido pelo jogador
 let botao = {
     x: 350,
     y: 200,
@@ -31,21 +16,14 @@ let botao = {
     intensidade: 10
 };
 
-// Dimensão do Canvas no html
 const larguraCanvas = 750;
 const alturaCanvas = 500;
-
 let canvas, contexto;
-
-// Texto de coordenadas e dimensão
 let coordenadas, intensidade;
 let largura, altura;
-
-// Usado para calcular pontuação
 let pt = 0;
 
 window.onload = () => {
-
     canvas = document.getElementById("canvas");
     contexto = canvas.getContext("2d");
 
@@ -54,10 +32,9 @@ window.onload = () => {
     largura = document.getElementById("largura");
     altura = document.getElementById("altura");
     intensidade = document.getElementById("intensidade");
-
+    
     // Adicionando eventos aos controles
     document.getElementById("iniciar").onclick = iniciar;
-
     document.getElementById("btncima").onclick = moverCima;
     document.getElementById("btnbaixo").onclick = moverBaixo;
     document.getElementById("btnesquerda").onclick = moverEsquerda;
@@ -71,6 +48,7 @@ iniciar = () => {
         r.ativo = false
         return r
     })
+    
     limparTela();
 
     rs.forEach(r => {
